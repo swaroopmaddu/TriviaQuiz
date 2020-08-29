@@ -9,10 +9,10 @@ A Flutter quiz application using Flutter with the api <a href="https://opentdb.c
 # Screenshots
 <br><br>
 <p style="float: left;text-align: center;">
-  <img src="images/home.png" width="200" />
-  <img src="images/quiz.png" width="200" /> 
-  <img src="images/quiz1.png" width="200" /> 
-  <img src="images/result.png" width="200" />
+  <img src="images/homeUI.png" width="200" />
+  <img src="images/quizUI.png" width="200" /> 
+  <img src="images/quizUI1.png" width="200" /> 
+  <img src="images/resultUI.png" width="200" />
 </p>
 
 ## Getting Started
