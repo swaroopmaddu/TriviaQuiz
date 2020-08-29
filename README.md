@@ -11,6 +11,7 @@ A Flutter quiz application using Flutter with the api <a href="https://opentdb.c
 <p style="float: left;text-align: center;">
   <img src="images/home.png" width="200" />
   <img src="images/quiz.png" width="200" /> 
+  <img src="images/quiz1.png" width="200" /> 
   <img src="images/result.png" width="200" />
 </p>
 
