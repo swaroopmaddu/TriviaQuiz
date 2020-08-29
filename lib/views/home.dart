@@ -35,7 +35,11 @@ class _HomePageState extends State<HomePage> {
             ),
             Text(
               "Trivia Quiz",
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900),
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: 28,
+                fontWeight: FontWeight.w900,
+              ),
             ),
             Container(
               margin: EdgeInsets.only(left: 90),
@@ -199,27 +203,45 @@ class _HomePageState extends State<HomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  decoration: BoxDecoration(
+                GestureDetector(
+                  onTap: () => getQuestions(),
+                  child: Container(
+                    width: 120,
+                    height: 60,
+                    decoration: BoxDecoration(
                       color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10)),
-                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                  alignment: Alignment.bottomCenter,
-                  child: SizedBox(
-                    child: FlatButton(
-                      onPressed: () => getQuestions(),
-                      child: Row(
-                        children: [
-                          Text(
-                            "Start",
-                            style: TextStyle(fontSize: 22, color: Colors.white),
-                          ),
-                          Icon(
-                            Icons.chevron_right,
-                            color: Colors.white,
-                          ),
-                        ],
-                      ),
+                      borderRadius: BorderRadius.circular(50),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey[500],
+                          offset: Offset(4.0, 4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0,
+                        ),
+                        BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(-4.0, -4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0,
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Start",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w900),
+                        ),
+                        Icon(
+                          Icons.chevron_right,
+                          color: Colors.white,
+                          size: 32.0,
+                        ),
+                      ],
                     ),
                   ),
                 ),

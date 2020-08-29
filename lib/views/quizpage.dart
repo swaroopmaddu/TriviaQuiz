@@ -18,6 +18,7 @@ class _QuizState extends State<Quiz> {
   int correct = 0;
   int wrong = 0;
   bool _loading;
+  bool isAnswered = false;
 
   QuestionBank _questions;
 
@@ -42,7 +43,7 @@ class _QuizState extends State<Quiz> {
           body: Center(child: CircularProgressIndicator()));
     }
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[300],
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -54,23 +55,30 @@ class _QuizState extends State<Quiz> {
                     width: 120,
                     height: 120,
                     decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(20)),
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey[500],
+                          offset: Offset(4.0, 4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0,
+                        ),
+                        BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(-4.0, -4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0,
+                        ),
+                      ],
+                    ),
                     child: Center(
-                      child: Column(
-                        children: [
-                          Text(
-                            correct.toString(),
-                            style: TextStyle(color: Colors.white, fontSize: 50),
-                          ),
-                          Text(
-                            "Correct",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w900),
-                          ),
-                        ],
+                      child: Text(
+                        correct.toString(),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 50,
+                            fontWeight: FontWeight.w900),
                       ),
                     ),
                   ),
@@ -79,23 +87,30 @@ class _QuizState extends State<Quiz> {
                     width: 120,
                     height: 120,
                     decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(20)),
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey[500],
+                          offset: Offset(4.0, 4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0,
+                        ),
+                        BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(-4.0, -4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0,
+                        ),
+                      ],
+                    ),
                     child: Center(
-                      child: Column(
-                        children: [
-                          Text(
-                            wrong.toString(),
-                            style: TextStyle(color: Colors.white, fontSize: 50),
-                          ),
-                          Text(
-                            "Wrong",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w900),
-                          ),
-                        ],
+                      child: Text(
+                        wrong.toString(),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 50,
+                            fontWeight: FontWeight.w900),
                       ),
                     ),
                   )
@@ -119,33 +134,64 @@ class _QuizState extends State<Quiz> {
                     children: _questions.questions[i].options
                         .map(
                           (element) => GestureDetector(
-                            onTap: () {
-                              if (element ==
-                                  _questions.questions[i].correctAnswer) {
-                                correct += 1;
-                              } else {
-                                wrong += 1;
-                              }
-                              setState(() {
-                                if (i + 1 < max_questions) {
-                                  i += 1;
-                                } else {
-                                  _showScoreDialog();
-                                }
-                              });
-                            },
+                            onTap: isAnswered
+                                ? null
+                                : () async {
+                                    if (element ==
+                                        _questions.questions[i].correctAnswer) {
+                                      correct += 1;
+                                    } else {
+                                      wrong += 1;
+                                    }
+                                    setState(() {
+                                      isAnswered = true;
+                                    });
+                                    await Future.delayed(
+                                        const Duration(seconds: 2));
+                                    setState(() {
+                                      isAnswered = false;
+                                      if (i + 1 < max_questions) {
+                                        i += 1;
+                                      } else {
+                                        _showScoreDialog();
+                                      }
+                                    });
+                                  },
                             child: Container(
                               margin: EdgeInsets.only(left: 10, bottom: 20),
                               width: MediaQuery.of(context).size.width * 0.85,
                               decoration: BoxDecoration(
-                                  color: Colors.blue,
-                                  borderRadius: BorderRadius.circular(10)),
+                                color: isAnswered
+                                    ? element ==
+                                            _questions
+                                                .questions[i].correctAnswer
+                                        ? Colors.green
+                                        : Colors.red
+                                    : Colors.grey[300],
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey[500],
+                                    offset: Offset(4.0, 4.0),
+                                    blurRadius: 15.0,
+                                    spreadRadius: 1.0,
+                                  ),
+                                  BoxShadow(
+                                    color: Colors.white,
+                                    offset: Offset(-4.0, -4.0),
+                                    blurRadius: 15.0,
+                                    spreadRadius: 1.0,
+                                  ),
+                                ],
+                              ),
                               padding: EdgeInsets.symmetric(
                                   horizontal: 5, vertical: 2),
                               child: Center(
                                 child: Html(data: element, style: {
                                   "html": Style(
-                                      color: Colors.white,
+                                      color: isAnswered
+                                          ? Colors.white
+                                          : Colors.blue,
                                       fontSize: FontSize(20),
                                       fontWeight: FontWeight.w600),
                                 }),
@@ -182,7 +228,7 @@ class _QuizState extends State<Quiz> {
             "Your score is $correct / $max_questions",
             style: TextStyle(
                 color: Colors.blueGrey,
-                fontSize: 32,
+                fontSize: 28,
                 fontWeight: FontWeight.w900),
           ),
           actions: <Widget>[
