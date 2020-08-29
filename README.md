@@ -3,8 +3,8 @@
 A Flutter quiz application using Flutter with the api <a href="https://opentdb.com/">Open Trivia Database</a>.
 * Beautiful UI 
 * Select number of questions
-* Select category from 7 dirrerent categories.
-* Select category as random to get random question from all categories.
+* Select category from 7 different categories.
+*  Select the category as random to get random questions from all categories.
 * Select level Easy Medium or Hard
 
 # dependencies
